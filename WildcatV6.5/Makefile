@@ -14,7 +14,11 @@ STM_LIB=FWLib/inc
 #NEED AT LEAST >>>> CFLAGS = -Os -Iinc -mcpu=cortex-m3 -mthumb -fno-common -fzero-initialized-in-bss -I $(STM_LIB)
 
 #CFLAGS = -Wall -Os -I. -Iinc  -Werror -mcpu=cortex-m3 -mthumb -fno-common -fzero-initialized-in-bss -msoft-float -MD -I $(STM_LIB)
-CFLAGS = -Wall -O2 -I. -Iinc  -Werror -mcpu=cortex-m3 -mthumb -fno-common -fzero-initialized-in-bss -msoft-float -MD -I $(STM_LIB)
+CFLAGS  = -O3 -I. -Iinc
+CFLAGS += -Wall -Werror
+CFLAGS += -mcpu=cortex-m3 -mthumb
+CFLAGS += -fno-common -ffunction-sections -fdata-sections -fzero-initialized-in-bss
+CFLAGS += -msoft-float -MD -I $(STM_LIB)
 
 #-os = optimise for size
 #-o2 = optimise for speed
@@ -23,10 +27,10 @@ CFLAGS = -Wall -O2 -I. -Iinc  -Werror -mcpu=cortex-m3 -mthumb -fno-common -fzero
 #-Werror = makes all warnings into errors
 
 #AFLAGS = -mcpu=cortex-m3   
-AFLAGS = -mcpu=cortex-m3 -mthumb 
+AFLAGS = $(CFLAGS) -mcpu=cortex-m3 -mthumb 
 #LDFLAGS = -mcpu=cortex-m3 -lc -lnosys -mthumb -march=armv7 -mfix-cortex-m3-ldrd -msoft-float -lstm32 -nostartfiles  
 
-LDFLAGS = -mcpu=cortex-m3 -lc -mthumb -march=armv7 -mfix-cortex-m3-ldrd -msoft-float -nostartfiles -Wl,-Map,$*.map
+LDFLAGS = $(CFLAGS) -mcpu=cortex-m3 -lc -mthumb -march=armv7 -mfix-cortex-m3-ldrd -msoft-float -nostartfiles -Wl,-Map,$*.map -Wl,--gc-sections
 
 # tried LDFLAGS = -mcpu=cortex-m3 -mthumb -march=armv7 -mfix-cortex-m3-ldrd -msoft-float
 
@@ -49,7 +53,7 @@ clean:
 	$(CC) $(CFLAGS) -c -o $@ $*.c
 
 .s.o:
-	$(CC) $(AFLAGS) -c -o $@ $*.S
+	$(CC) $(AFLAGS) -c -o $@ $*.s
 
 %.elf: %.lds $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS) -T $<

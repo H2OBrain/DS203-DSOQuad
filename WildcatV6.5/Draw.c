@@ -1,4 +1,4 @@
-	//******************** (C) COPYRIGHT 2009 e-Design Co.,Ltd. *********************
+    //******************** (C) COPYRIGHT 2009 e-Design Co.,Ltd. *********************
 // File Name : Draw.c       
 // Version   : DS203_APP Ver 2.3x                                  Author : bure
 //*******************************************************************************/
@@ -11,7 +11,7 @@
 #include "Function.h"
 #include "File.h"
 
-void LoadBuffer(u16 Row, u8 buffer,u8 *y,u8 *Dot_Hide,u8 service);	
+void LoadBuffer(u16 Row, u8 buffer,u8 *y,u8 *Dot_Hide,u8 service);  
 void LoadFFTbuffer(u16 Row,u8 buffer);
 void Print_Str_Row(u16 Row, u16* LCD_Buffer, u16 x0, s16 y0, char *s);
 void DisplayFFtValues(u16 Row,u8 buffer);
@@ -57,10 +57,10 @@ u8 SpecLine = 0;
 s32 Tmp2;
 s16 skip;
 u8  UpdateBackground;
-u8  Rdiscard=0;				//post-signal trace blanking
+u8  Rdiscard=0;             //post-signal trace blanking
 char DbScaleStr[3];
-//uc16 COLOR_INDEX=0x050F;		//red fft values display
-u16 COLOR_INDEX=0x0503;		        //green fft values display             
+//uc16 COLOR_INDEX=0x050F;      //red fft values display
+u16 COLOR_INDEX=0x0503;             //green fft values display             
                                         //0x0500 = cyan w black bg
                                         //0x0501 = yellow w black bg
 u16 Count_FPS = 0;
@@ -131,11 +131,11 @@ uc8  Mark_TAB[5][7] ={{0x00,0x00,0x42,0xFE,0x02,0x00,0x00},    // Mark 1
                       {0x00,0x40,0x40,0x7E,0x40,0x40,0x00}};   // Mark T
 
   uc16 FrameCountRef[22]= {18000,9000,3600,1800,900,362,182,92,     49,   29,   15,   12,    12,12,12,12,12,12,12,12,12,12};   
-//                           1   500   200  100  50  20  10  5       2     1    500   200			      time base	
+//                           1   500   200  100  50  20  10  5       2     1    500   200                 time base 
 
 //uc16 Char_TAB_8x11[744] = {
-//uc16 Char_TAB_8x11[752] = {                      // used when adding extra character 			 	
-//uc16 Char_TAB_8x11[747] = {                      // used when adding 3 pix wide period 			 	
+//uc16 Char_TAB_8x11[752] = {                      // used when adding extra character              
+//uc16 Char_TAB_8x11[747] = {                      // used when adding 3 pix wide period                
   uc16 Char_TAB_8x11[768] = {                      // used when adding 3 pix period and extra char
   0x000,0x000,0x000,0x780,0x040,0x020,0x020,0x020, // "the upper left corner
 //  0x020,0x020,0x040,0x780,0x000,0x000,0x000,0x000, //  # the upper right corner
@@ -173,7 +173,7 @@ uc8  Mark_TAB[5][7] ={{0x00,0x00,0x42,0xFE,0x02,0x00,0x00},    // Mark 1
   //0x07F,0x008,0x0D4,0x322,0x441,0x300,0x0C0,0x000, // ? Kv
   0x070,0x0F8,0x1FC,0x1FC,0x1FC,0x0F8,0x070,0x000, // ? dot
   //0x1F8,0x104,0x272,0x272,0x2F2,0x284,0x078,0x000, // @ 
-  0x3FE,0x020,0x3FE,0x000,0x320,0x2A0,0x260,0x000, // @		Hz
+  0x3FE,0x020,0x3FE,0x000,0x320,0x2A0,0x260,0x000, // @     Hz
   0x3F0,0x3F8,0x04C,0x046,0x04C,0x3F8,0x3F0,0x000, // A
   0x202,0x3FE,0x3FE,0x222,0x222,0x3FE,0x1DC,0x000, // B
   0x0F8,0x1FC,0x306,0x202,0x202,0x306,0x18C,0x000, // C
@@ -375,20 +375,20 @@ void Print_Str2(u16 x0,u16 x1,u16 y0, u16 Type, u8 Mode, char *s,u8 LeadingBlank
 {
 u8 LeadingLine=0;
 
-	signed short i, j, b; 
-	u8 xm, ym;
-	__LCD_Set_Block(x0, x1, y0, y0+21);
+    signed short i, j, b; 
+    u8 xm, ym;
+    __LCD_Set_Block(x0, x1, y0, y0+21);
 
-      if(LeadingBlanks>10){		//special case to add 1 leading line
+      if(LeadingBlanks>10){     //special case to add 1 leading line
         LeadingBlanks-=10; 
         LeadingLine=1;
       } 
 
       for (i=0;i<LeadingBlanks;i++){
-	for (j=0;j<22;j++){ 
-	  __LCD_SetPixl(BLACK);   //Normal replace Display
-	}
-	x0++;                            // a string to add a blank row
+    for (j=0;j<22;j++){ 
+      __LCD_SetPixl(BLACK);   //Normal replace Display
+    }
+    x0++;                            // a string to add a blank row
       }
 
     if(LeadingLine){
@@ -398,35 +398,35 @@ u8 LeadingLine=0;
       }
       x0+=2;                            // a string to add a blank row
     }
-	while (*s!=0) {
-		for(i=0;i<8;++i){
-			if((*s==0x20)||(*s==0x21)) b = 0x0000;
-			else                       b = Get_TAB_8x11(*s, i);
-				if((*s==0x21)&&(i==4)) break;
-			for(xm=0;xm<2;++xm){
-				for(j=0;j<11;++j){
-					if((b << j)& 0x400) {
-						if(Mode == 0) for(ym=0;ym<2;++ym) __LCD_SetPixl(Color[Type >> 0x8]);
-						else          for(ym=0;ym<2;++ym) __LCD_SetPixl(Color[Type & 0x0F]);
-					} else {
-						if(Mode == 0) for(ym=0;ym<2;++ym) __LCD_SetPixl(Color[Type & 0x0F]);
-						else          for(ym=0;ym<2;++ym) __LCD_SetPixl(Color[Type >> 0x8]);
-					}
-				}
-			}
-		}
-		if(*s==0x21) x0 +=8;           // display position horizontally +4 ("!" character - shift by 1/2 a character)
-		else  x0 += 16;                 // display position horizontally +8
-		++s;                           // string pointer +1
-	}
+    while (*s!=0) {
+        for(i=0;i<8;++i){
+            if((*s==0x20)||(*s==0x21)) b = 0x0000;
+            else                       b = Get_TAB_8x11(*s, i);
+                if((*s==0x21)&&(i==4)) break;
+            for(xm=0;xm<2;++xm){
+                for(j=0;j<11;++j){
+                    if((b << j)& 0x400) {
+                        if(Mode == 0) for(ym=0;ym<2;++ym) __LCD_SetPixl(Color[Type >> 0x8]);
+                        else          for(ym=0;ym<2;++ym) __LCD_SetPixl(Color[Type & 0x0F]);
+                    } else {
+                        if(Mode == 0) for(ym=0;ym<2;++ym) __LCD_SetPixl(Color[Type & 0x0F]);
+                        else          for(ym=0;ym<2;++ym) __LCD_SetPixl(Color[Type >> 0x8]);
+                    }
+                }
+            }
+        }
+        if(*s==0x21) x0 +=8;           // display position horizontally +4 ("!" character - shift by 1/2 a character)
+        else  x0 += 16;                 // display position horizontally +8
+        ++s;                           // string pointer +1
+    }
 
       for (i=0;i<TrailingBlanks;i++){
-	for (j=0;j<22;j++){ 
+    for (j=0;j<22;j++){ 
           __LCD_SetPixl(BLACK);   //Normal replace Display
-	}
-	x0++;                            // a string to add a blank row
+    }
+    x0++;                            // a string to add a blank row
       }
-      //__LCD_Set_Block(LCD_X1,LCD_X2,LCD_Y1,LCD_Y2);  		// restore the full-size window > Now done externally
+      //__LCD_Set_Block(LCD_X1,LCD_X2,LCD_Y1,LCD_Y2);       // restore the full-size window > Now done externally
 }
 
 
@@ -517,10 +517,10 @@ if(Row & 1){                                       // Odd row process
       Tmp2=ScaleXposi();
 
      if(Tmp2 > MIN_X) {
-        if((Row == Tmp2)&&((_X_posi.Flag & HID)== 0)){				
+        if((Row == Tmp2)&&((_X_posi.Flag & HID)== 0)){              
           for(i = 1; i < Y_SIZE; i+=3) LCD_Buffer[1][i] |= ORANGE;       //X vernier
         }
-        if((Row == Tmp2-1)||(Row == Tmp2+1)){				      //mid portion for marks, aligned with borders, 2 outside pix	
+        if((Row == Tmp2-1)||(Row == Tmp2+1)){                     //mid portion for marks, aligned with borders, 2 outside pix  
           LCD_Buffer[1][Y_SIZE] = ORANGE;
           LCD_Buffer[1][Y_BASE] = ORANGE;
         }
@@ -529,10 +529,10 @@ if(Row & 1){                                       // Odd row process
   }//if mode !scan    
 
       Tmp = MIN_X + Title[T_VERNIE][T1].Value;
-      if((Row == Tmp)&&((Title[T_VERNIE][T1].Flag & HID)== 0)){		      	
+      if((Row == Tmp)&&((Title[T_VERNIE][T1].Flag & HID)== 0)){             
         for(i = 1; i < Y_SIZE; i+=3) LCD_Buffer[1][i] |= WHT;         //T1 vernier
       }
-      if((Row == Tmp-1)||(Row == Tmp+1)){				      //mark mid portions minus mid	
+      if((Row == Tmp-1)||(Row == Tmp+1)){                     //mark mid portions minus mid 
         LCD_Buffer[1][Y_SIZE] = WHT;
         LCD_Buffer[1][Y_BASE] = WHT;
       }
@@ -546,7 +546,7 @@ if(Row & 1){                                       // Odd row process
         LCD_Buffer[1][Y_BASE] = WHT;
       }
       if(Row == Tmp)VernierMark(1,WHT);
-    }else{	//if row>min x & < max x					//CHANGED 
+    }else{  //if row>min x & < max x                    //CHANGED 
 //------------------------- Draw the Y Vernie data -----------------------------
 
       for(Tmp=-1;Tmp<2;Tmp++)LCD_Buffer[1][Title[V_VERNIE][V1].Value+Tmp] |= WHT;
@@ -645,7 +645,7 @@ if(Row & 1){                                       // Odd row process
 
   }//even row process
 
- }else if((_State.Value==0)&&(Row > MIN_X)&&(Row < MAX_X)){	//persistence mode
+ }else if((_State.Value==0)&&(Row > MIN_X)&&(Row < MAX_X)){ //persistence mode
     if((_T_base>10)||(Row!=skip)){
       if(ClearPerst!=1)LoadBuffer(Row,0,y,Dot_Hide,0);          //ClearPerst==1 denotes variable timer to display after loading X frames
       __Point_SCR(Row, MIN_Y);
@@ -673,24 +673,24 @@ if(Row & 1){                                       // Odd row process
 ****************************************************************
  Draw_Window :  
 *******************************************************************************/
-void Draw_Window(void)						
+void Draw_Window(void)                      
 { 
   s32 Tmp;
   u16 Row,i,Offset,SpecLimit;   
   s16 h=0;
   u16 TrackColor=0;
   u8  j,end=0;
-	
+    
   if(FlagMeter)Limit=213;else Limit=299;
   ListBottom=174+11;
   for(i=0;i<15;i++){if(Label[i][0]==0)break;else ListBottom-=11;}
-  Base1(1);	
+  Base1(1); 
   __Row_DMA_Ready();
   __Row_Copy(Base2Buffer, LCD_Buffer[0]);
    
       //if(_4_source>13)COLOR_INDEX=0x0500; else COLOR_INDEX=0x0501;    //sets fft values display to source channel color (need to change uc)
 
-	if(((ShowFFT==1)||(_4_source==SPEC_A))&&(_Mode!=X_Y)){
+    if(((ShowFFT==1)||(_4_source==SPEC_A))&&(_Mode!=X_Y)){
                
                 if(_T_base==8){                         //special case to align with data flow and other timebases
                   Delayms(2);
@@ -699,27 +699,27 @@ void Draw_Window(void)
                 }      
 
                 if(DownConvertMode==0){
-                  FFTflag=1;		
-                  Display_Value(FRQ);			//calculate NFreq using meter routine, sets N_UNIT and ShiftDigits for proper display
+                  FFTflag=1;        
+                  Display_Value(FRQ);           //calculate NFreq using meter routine, sets N_UNIT and ShiftDigits for proper display
                   FFTflag=0;
                 }
 
-		PeakFreq = 2;                          //Called for as array index for LCD_Buffer @ -2. Less than 2 could put index out of bounds
-	        imax = 0;
-		for (i=1; i < FFTSize/2; i++) {
-			if (PeakFreq < fi[i]) {  
-				PeakFreq= fi[i] ; 
-				imax = i;
-			}
-		}
+        PeakFreq = 2;                          //Called for as array index for LCD_Buffer @ -2. Less than 2 could put index out of bounds
+            imax = 0;
+        for (i=1; i < FFTSize/2; i++) {
+            if (PeakFreq < fi[i]) {  
+                PeakFreq= fi[i] ; 
+                imax = i;
+            }
+        }
 
                 if((AutoFFT==1)&&((EnableFFT==2)||(_T_base>7)||(freerun))){                      //auto fft is on if =1
-                  if(FFTGain>7)FFTGain=7;			//auto gain limit
+                  if(FFTGain>7)FFTGain=7;           //auto gain limit
                   if((PeakFreq==198)&&(FFTGain>0))FFTGain--;
                     else{
                       if(PeakFreq<100){                                     
                         if(FFTGain<7)FFTGain++;
-                        if((PeakFreq<78)&&(FFTGain<7))FFTGain++;                 			
+                        if((PeakFreq<78)&&(FFTGain<7))FFTGain++;                            
                       }
                     }
                 }
@@ -735,9 +735,9 @@ void Draw_Window(void)
 
                   Tmp=(NFreq/FFTBins)*imax;
                   if((ChartLogic())&&(Tmp<1000))Tmp=0x80000000;                
-	          if (imax>0)Int2Str(PeakFreqStr, Tmp, N_UNIT, 4, UNSIGN,ShiftDigits);
+              if (imax>0)Int2Str(PeakFreqStr, Tmp, N_UNIT, 4, UNSIGN,ShiftDigits);
                 }
-	
+    
         }
 
 
@@ -769,14 +769,14 @@ void Draw_Window(void)
 
    if(!(OsBufferLogicFlag||OsChartFlag)){
 
-     if (Row<(discard + MIN_X)){			//blanks first few pixels of traces to eliminate noise
-       Color[TR_1]=0x0000;				//process makes these into a hor line so "low brightness"
-       Color[TR_2]=0x0000;				//in draw row does not turn them on
+     if (Row<(discard + MIN_X)){            //blanks first few pixels of traces to eliminate noise
+       Color[TR_1]=0x0000;              //process makes these into a hor line so "low brightness"
+       Color[TR_2]=0x0000;              //in draw row does not turn them on
      }
 
-     if (Row>(404-Rdiscard)){			//post-signal blanking for dig ch triggering jitter stabilization	 
-       Color[TR_1]=0x0000;			
-       Color[TR_2]=0x0000;			//404 aligns with x_size @ 392 and IP routine bailing out @ 392	
+     if (Row>(404-Rdiscard)){           //post-signal blanking for dig ch triggering jitter stabilization    
+       Color[TR_1]=0x0000;          
+       Color[TR_2]=0x0000;          //404 aligns with x_size @ 392 and IP routine bailing out @ 392 
        Color[TR_3]=0x0000;
        Color[TR_4]=0x0000;
      }
@@ -788,21 +788,21 @@ void Draw_Window(void)
 
      if ((Title[TRIGG][SOURCE].Value<2)||(Title[TRIGG][SOURCE].Value==4))end=discard+5; else end=discard;  //was 4, changed to 5
    
-     if (Row<(MIN_X+end)){			//blanks first pixels shifted in dig channels to align with analog chs
+     if (Row<(MIN_X+end)){          //blanks first pixels shifted in dig channels to align with analog chs
        Color[TR_3]=0x0000;
      }
 
      if ((_4_source==A_add_B)||(_4_source==A_sub_B))end=discard;  
 
-     if (Row<(MIN_X+end)){			//blanks first pixels shifted in dig channels to align with analog chs
+     if (Row<(MIN_X+end)){          //blanks first pixels shifted in dig channels to align with analog chs
        Color[TR_4]=0x0000;
      }
 
    } //if !OsBufferLogicFlag
 
      Draw_Row(Row);     //Modo oscilloscopio
-     if((Row<(discard+5+MIN_X))||(Row>(404-Rdiscard))) {		//was4, changed to 5
-       Color[TR_1]=0xFFE0; 								//return to correct colors
+     if((Row<(discard+5+MIN_X))||(Row>(404-Rdiscard))) {        //was4, changed to 5
+       Color[TR_1]=0xFFE0;                              //return to correct colors
        Color[TR_2]=0x07FF;
        Color[TR_3]=0xF81F;
        Color[TR_4]=0x07E0;
@@ -823,43 +823,43 @@ void Draw_Window(void)
     Count_FPS++; 
     FactorX=((s16)OffsetX-100)+((-ADCoffset)+Ka1[_A_Range]);
     FactorY=((s16)OffsetY-100)+((-ADCoffset)+Kb1[_B_Range]);
-    FactorY13=FactorY+13;							//for direct screen access, need offset 13
+    FactorY13=FactorY+13;                           //for direct screen access, need offset 13
     if(EditListActive(1))XYLimit=310;else XYLimit=234;
     for(Row = MIN_X; Row <= MAX_X; ++Row) LoadXYBuffer(Row);
     __LCD_DMA_Ready();
     __Row_DMA_Ready();
     if((XYper)&&(EditListActive(1)))PrintDir(0,0,1);
     InitXY=0;
-  } 											
+  }                                             
 
 if(((_4_source==SPEC_A)||(_4_source==SPEC_B))&&(!ChartLogic())){
   if((_Mode!=X_Y)&&(_State.Value==0)&&((FrameEndFlag==1)||((SpecFrameCount>FrameCountRef[_T_base])&&((_T_base>10)  ||(_Mode==SCAN)   ||
-      ((FrameEndFlag==0)&&(__Get(FIFO_START)==0)))))){					//spectrograph/MAP modes
+      ((FrameEndFlag==0)&&(__Get(FIFO_START)==0)))))){                  //spectrograph/MAP modes
 
       if(SpecMode>0){        
-        if(_1_source){h=(a_Max-a_Min)/(4/SpecMode);TrackColor=CYAN_;}		        //scale and remove offset using last frame
-          else if(_2_source){h=(b_Max-b_Min)/(4/SpecMode);TrackColor=YEL_;}		//done vars (not accumulated)
+        if(_1_source){h=(a_Max-a_Min)/(4/SpecMode);TrackColor=CYAN_;}               //scale and remove offset using last frame
+          else if(_2_source){h=(b_Max-b_Min)/(4/SpecMode);TrackColor=YEL_;}     //done vars (not accumulated)
         if(h<0)h=-h; 
       }
       if((FrameEndFlag==0)&&(_Mode!=AUTO)&&(_Mode!=SCAN)&&(__Get(FIFO_START)==0)){
         for (i=0; i<MAX_X; i++){TrackBuff[i*4]=0;TrackBuff[(i*4)+1]=0;}                 //clear track data if triggering lost
         ClearFFTbuffer();
-        h=0; 										//clear envelope
+        h=0;                                        //clear envelope
       }
 
-    if(_4_source==SPEC_B){ 				//MAP mode
+    if(_4_source==SPEC_B){              //MAP mode
         Count_FPS++;
 
-        if (SpecLine<MIN_Y)SpecLine=MAX_Y;		
+        if (SpecLine<MIN_Y)SpecLine=MAX_Y;      
 
         if ((EditListActive(1))&&(SpecLine<(MAX_Y-15))){
           if(SpecLine>(ListBottom+MIN_Y))SpecLimit=Limit;else SpecLimit=X_SIZE;
         }else SpecLimit=X_SIZE;
 
-	for (i=0; i<MAX_X+1; i++) {							//max_x=397 with meters off
+    for (i=0; i<MAX_X+1; i++) {                         //max_x=397 with meters off
           __Point_SCR(i,SpecLine);                    
-          if((i>MIN_X)&&(i<X_SIZE)){ 								
-            if(i>SpecLimit)continue; 								
+          if((i>MIN_X)&&(i<X_SIZE)){                                
+            if(i>SpecLimit)continue;                                
             if(_1_source)__LCD_SetPixl(ColorIndexGen(TrackBuff[(i-6)*4]));
               else if(_2_source)__LCD_SetPixl(ColorIndexGen(TrackBuff[((i-6)*4)+1]));
           }else if((i>3)&&(i<9)&&(SpecLine>(MIN_Y+1))){
@@ -867,14 +867,14 @@ if(((_4_source==SPEC_A)||(_4_source==SPEC_B))&&(!ChartLogic())){
              DrawPixel(i,SpecLine-1,YEL_);
              if(_T_base>9)DrawPixel(i,SpecLine-2,YEL_);
           }else __LCD_SetPixl(0);
-  	}
+    }
 
         if(FlagMeter==0)for(i=397;i<400;i++)DrawPixel(i,SpecLine,0);
         if((SpecLine==MIN_Y)||(SpecLine==MAX_Y))for(i=0;i<MAX_X;i++)DrawPixel(i,SpecLine,GRAY);
-	SpecLine--;
+    SpecLine--;
     }
 
-    if(_4_source==SPEC_A){				//now defines A/B spec and envelope display
+    if(_4_source==SPEC_A){              //now defines A/B spec and envelope display
       Count_FPS++;
 
       if((SpecRow==25)||(UpdateScale)){                //>>>> need to reset specrow @ 25 every time mode is engaged
@@ -884,7 +884,7 @@ if(((_4_source==SPEC_A)||(_4_source==SPEC_B))&&(!ChartLogic())){
                 
         Print_Str(0,193+MIN_Y,0x050E,INV,"sec");
         if(_T_base<2)Offset=128;else Offset=512;
-        for(i=34;i<195;i+=34){					  //draw freq scale in spec mode
+        for(i=34;i<195;i+=34){                    //draw freq scale in spec mode
           for(j=20;j<25;j++)DrawPixel(j,i+MIN_Y,YEL_);
           Tmp=((NFreq+Offset)/255)*i;
           Int2Str(NFreqStr,Tmp,N_UNIT, 4, UNSIGN,ShiftDigits);    
@@ -894,21 +894,21 @@ if(((_4_source==SPEC_A)||(_4_source==SPEC_B))&&(!ChartLogic())){
           Print_Str(4,i+3,0x0508,INV,Nsuffix);
         }
       }
-        if(SpecRow==25)SecondsTick=0;		
+        if(SpecRow==25)SecondsTick=0;       
         if(AutoFFT==0){for(i=0;i<200;i++){if(fi[i]<51){fi[i]=(fi[i]*fi[i]*fi[i])/2500;}}}    // x^3/50^2 noise suppression in log mode 
 
-        for (i=Y_BASE+1;i<200;i++) {				     
+        for (i=Y_BASE+1;i<200;i++) {                     
           if(SpecMode==0){
-            LCD_Buffer[SpecRow & 1][i] = ColorIndexGen(fi[i-Y_BASE]);  				//spec display only
+            LCD_Buffer[SpecRow & 1][i] = ColorIndexGen(fi[i-Y_BASE]);               //spec display only
           }else if(SpecMode==1){
-            if((i>=(150-h))&&(i<=(150+h)))							//spec + envelope display(1/2size)
-              LCD_Buffer[SpecRow & 1][i] = TrackColor;							
+            if((i>=(150-h))&&(i<=(150+h)))                          //spec + envelope display(1/2size)
+              LCD_Buffer[SpecRow & 1][i] = TrackColor;                          
                 else LCD_Buffer[SpecRow & 1][i] = ColorIndexGen(fi[i-Y_BASE]);  
-          }else{								
-            if((i>=(100-h))&&(i<=(100+h)))LCD_Buffer[SpecRow & 1][i] = TrackColor;		//envelope display only full size
+          }else{                                
+            if((i>=(100-h))&&(i<=(100+h)))LCD_Buffer[SpecRow & 1][i] = TrackColor;      //envelope display only full size
               else LCD_Buffer[SpecRow & 1][i] = BLACK;
           }
-  	}
+    }
 
         if ((EditListActive(1))&&(SpecRow>Limit)){
           PrintDir(SpecRow,SpecRow&1,0);
@@ -919,15 +919,15 @@ if(((_4_source==SPEC_A)||(_4_source==SPEC_B))&&(!ChartLogic())){
           for(i=209;i<213;i++)DrawPixel(SpecRow-1,i,YEL_);                                       //seconds ticks
           SecondsTick=48;
         } 
-	__Point_SCR(SpecRow, MIN_Y);
-        __LCD_Copy(LCD_Buffer[SpecRow & 1], Y_SIZE+1);               	
-	SpecRow++;
+    __Point_SCR(SpecRow, MIN_Y);
+        __LCD_Copy(LCD_Buffer[SpecRow & 1], Y_SIZE+1);                  
+    SpecRow++;
         if (SpecRow > MAX_X) SpecRow = 25;        
      }
 
-    if(_Mode==AUTO)SpecFrameCount=3;else SpecFrameCount=0;					//reset interrupt based frame timing
-  }									//if mode != xy
-}									// is in spec a or b
+    if(_Mode==AUTO)SpecFrameCount=3;else SpecFrameCount=0;                  //reset interrupt based frame timing
+  }                                 //if mode != xy
+}                                   // is in spec a or b
 
   if((FrameEndFlag)&&(ResetEnableFFT==0))EnableFFT=1;
   ResetEnableFFT=0;
@@ -943,11 +943,11 @@ if(((_4_source==SPEC_A)||(_4_source==SPEC_B))&&(!ChartLogic())){
 /*******************************************************************************
  Draw_Mark :  Routine per un marcatore laterale
 *******************************************************************************/
-void Draw_Mark(u16 m, u16 n)						
+void Draw_Mark(u16 m, u16 n)                        
 { 
   u16 i, j, Tmp;
 
-  V_Trigg[2].Value=Title[2][POSI].Value + 10;			        // show ch3 and 4 trigger points at their actual values
+  V_Trigg[2].Value=Title[2][POSI].Value + 10;                   // show ch3 and 4 trigger points at their actual values
   V_Trigg[3].Value=Title[3][POSI].Value + 10;
   
   if(m < 4)  { if((Title[m][POSI].Value > 200-3)||(Title[m][POSI].Value <3))return; }     //shut off at bottom too
@@ -955,12 +955,12 @@ void Draw_Mark(u16 m, u16 n)
 
   for(i = 0; i <= 10; ++i){
     if(i < 7){
-      if(m < 4){									    //Y position mark
+      if(m < 4){                                        //Y position mark
         Tmp = Mark_TAB[m][i];
         __Point_SCR(i, Title[m][POSI].Value +(MIN_Y-4));
       } else {
         Tmp = Mark_TAB[4][i];
-        __Point_SCR(i,     V_Trigg[n].Value +(MIN_Y-4));				    //Trigg vernier position mark
+        __Point_SCR(i,     V_Trigg[n].Value +(MIN_Y-4));                    //Trigg vernier position mark
       }
       for(j = 0; j < 8; ++j){
         if(Tmp & 1) __LCD_SetPixl(BLACK);
@@ -984,7 +984,7 @@ void Draw_Mark(u16 m, u16 n)
 /*******************************************************************************
  Update_Mark :  Disegna Marcatori laterali
 *******************************************************************************/
-void Update_Mark(void)						
+void Update_Mark(void)                      
 { 
   s16 i, Tmp;
   u8  j=0;
@@ -995,8 +995,8 @@ void Update_Mark(void)
   if(ConfNameTimer>0)PrintConfigName();                                 //marks cover text
 
   for(i=0;i<4;i++){
-    if(Title[i][SOURCE].Value!=HIDE)Draw_Mark(i,i);	 		 // Display Track mark
-    if(_Tr_source==i)Draw_Mark(TRIGG,i);				 // Display Trigg mark
+    if(Title[i][SOURCE].Value!=HIDE)Draw_Mark(i,i);          // Display Track mark
+    if(_Tr_source==i)Draw_Mark(TRIGG,i);                 // Display Trigg mark
   }
   if(_Tr_source == 4) {
     Draw_Mark(TRIGG,  TRACK1); // Display Trigg1 mark
@@ -1018,7 +1018,7 @@ void Update_Mark(void)
   for(j = MIN_Y-2; j < MAX_Y+3; ++j) __LCD_SetPixl(BLACK); // Clear last row 
   for(i = MIN_X; i <= MAX_X+1; ++i)DrawBase(i,BLACK);
 
-  __Point_SCR(MIN_X-1, Title[V_VERNIE][V1].Value +(MIN_Y - 2));		//draw "base" of V vernier marks
+  __Point_SCR(MIN_X-1, Title[V_VERNIE][V1].Value +(MIN_Y - 2));     //draw "base" of V vernier marks
   for(i = 0; i < 5; ++i) __LCD_SetPixl(WHT);
   __Point_SCR(MIN_X-1, Title[V_VERNIE][V2].Value +(MIN_Y - 2));
   for(i = 0; i < 5; ++i) __LCD_SetPixl(WHT);
@@ -1029,10 +1029,10 @@ void Update_Mark(void)
 
   Tmp2=ScaleXposi();
 
-  if(Tmp2 > MIN_X){							//X position trigger point vernier "base" marks
+  if(Tmp2 > MIN_X){                         //X position trigger point vernier "base" marks
     for(i = Tmp2 - 2; i <= Tmp2 + 2; ++i)DrawBase(i,ORANGE);
   }
-  Tmp = MIN_X + Title[T_VERNIE][T1].Value;				//T vernier base marks
+  Tmp = MIN_X + Title[T_VERNIE][T1].Value;              //T vernier base marks
   for(i = Tmp - 2; i <= Tmp + 2; ++i)DrawBase(i,WHT);
   Tmp = MIN_X + Title[T_VERNIE][T2].Value;
   for(i = Tmp - 2; i <= Tmp + 2; ++i)DrawBase(i,WHT);
@@ -1083,9 +1083,9 @@ void Update_View_Area(void)
 
       if ((Options&1)>0) {
         if (((_Mode==NORH)||(_Mode==NORHLD)||(_Mode==NORC))&&(_T_base < 10)&&(!OsBufferLogicFlag)){
-          Print_Str(Title[7][3].XPOS, 0,Title[7][3].Color[Title[7][0].Value], PRN,"T");	//active in this mode, normal color
+          Print_Str(Title[7][3].XPOS, 0,Title[7][3].Color[Title[7][0].Value], PRN,"T"); //active in this mode, normal color
         }else{
-          Print_Str(Title[7][3].XPOS, 0,0x0905, PRN,"T");						//greyed out, not active
+          Print_Str(Title[7][3].XPOS, 0,0x0905, PRN,"T");                       //greyed out, not active
         }
       }
     }   
@@ -1123,17 +1123,17 @@ u16 h;
     __Point_SCR(Row, MIN_Y);
     if(Row & 1)buffer=1;else buffer=0;  
   if((InitXY)||(XYper==0)){
-    if((Row == 260)||(Row+1 == MAX_X))Base1(buffer);						//for(i=0;i<201;i++)LCD_Buffer[1][i]=GRAY;
-    else if(Row == MIN_X)Base1(buffer);								//for(i=0;i<201;i++)LCD_Buffer[1][i]=GRAY;
+    if((Row == 260)||(Row+1 == MAX_X))Base1(buffer);                        //for(i=0;i<201;i++)LCD_Buffer[1][i]=GRAY;
+    else if(Row == MIN_X)Base1(buffer);                             //for(i=0;i<201;i++)LCD_Buffer[1][i]=GRAY;
     else if(((Row+1 - MIN_X)%25 == 0)&& (Row<260))__Row_Copy(Base4Buffer, LCD_Buffer[buffer]);  //%30
-    else if(((Row+1 - MIN_X)%5  == 0)&& (Row<260))__Row_Copy(Base3Buffer, LCD_Buffer[buffer]); 	//%6
+    else if(((Row+1 - MIN_X)%5  == 0)&& (Row<260))__Row_Copy(Base3Buffer, LCD_Buffer[buffer]);  //%6
     else if (Row != 260)__Row_Copy(Base2Buffer, LCD_Buffer[buffer]);
     if(InitXY)goto DrawCross;
   }
 
-  if(XYper){										//persistence mode
+  if(XYper){                                        //persistence mode
     for(h = 0; h <=RegTemp; ++h){
-         if(((DataBuf[h]&0xFF)+FactorX)==Row){					 	// if value in signal X matches position
+         if(((DataBuf[h]&0xFF)+FactorX)==Row){                      // if value in signal X matches position
            TempY=((DataBuf[h]>>8)&0xFF)+FactorY13;
            if((TempY>14)&&(TempY<212)){
            DrawPixel(Row,TempY,GRN);
@@ -1141,9 +1141,9 @@ u16 h;
          }
     }
 
-  }else{										//regular mode
+  }else{                                        //regular mode
     for(h = 0; h <=RegTemp; ++h){
-         if(((DataBuf[h]&0xFF)+FactorX)==Row){					 		       
+         if(((DataBuf[h]&0xFF)+FactorX)==Row){                                 
            TempY=((DataBuf[h]>>8)&0xFF)+FactorY;
            if((TempY>1)&&(TempY<199)){
              LCD_Buffer[buffer][TempY] |= GRN;
@@ -1157,7 +1157,7 @@ DrawCross:
     __LCD_Copy(LCD_Buffer[buffer], Y_SIZE+1);               
   }
 
- }											//if row>37
+ }                                          //if row>37
 }
 
 
@@ -1907,8 +1907,8 @@ char DbString[4];
                 }
               }
 
-              if(Row>266){				
-	        if((service==0)&&(DownConvertMode==0)){
+              if(Row>266){              
+            if((service==0)&&(DownConvertMode==0)){
                   Print_Str_Row(Row, LCD_Buffer[buffer], 267,189,  "db" );                        //print "db" on top line    
                 }   
                 for(i=0;i<8;i++){                                                                 //print db values in auto and manual modes
@@ -1917,7 +1917,7 @@ char DbString[4];
                   s8ToDec2(DbString,Tmp);
                   if((Tmp>-10)&&(Tmp<10))Tmp=4; else Tmp=0;
                   if(FlagMeter==0)Tmp+=88;                                                          
-		  Print_Str_Row(Row, LCD_Buffer[buffer], 284+Tmp,j,DbString); 
+          Print_Str_Row(Row, LCD_Buffer[buffer], 284+Tmp,j,DbString); 
                   if(j==189)j-=19;else j-=25;   
                 }
               }
@@ -1956,26 +1956,26 @@ char DbString[4];
 void DisplayFFtValues(u16 Row,u8 buffer){
 u8 Yadj=0;
               if((_Mode!=NORHLD)&&((FlagMeter>0)||((DownConvertMode)&&(FFTt1Mode==0)))){
-		if ( PeakFreq>5){
+        if ( PeakFreq>5){
 
-			if  ( RowMemPeak < 15)RowMemPeak = 15;
-			if  ( RowMemPeak > 253)RowMemPeak = 253;
-			if (PeakFreq+14 > 178) {
-				Print_Str_Row(Row, LCD_Buffer[buffer],  RowMemPeak+2,  178,  PeakFreqStr);
-			} else {
-				Print_Str_Row(Row, LCD_Buffer[buffer],  RowMemPeak+2,  PeakFreq+14,  PeakFreqStr);
-			}
+            if  ( RowMemPeak < 15)RowMemPeak = 15;
+            if  ( RowMemPeak > 253)RowMemPeak = 253;
+            if (PeakFreq+14 > 178) {
+                Print_Str_Row(Row, LCD_Buffer[buffer],  RowMemPeak+2,  178,  PeakFreqStr);
+            } else {
+                Print_Str_Row(Row, LCD_Buffer[buffer],  RowMemPeak+2,  PeakFreq+14,  PeakFreqStr);
+            }
 
-		}
+        }
               }
 
                 if(DownConvertMode)Yadj=(3*8);
-		if(Row<54)Print_Str_Row(Row, LCD_Buffer[buffer], 21, 189,  "Div:" ); 			
-		if(Row<(110+Yadj))Print_Str_Row(Row, LCD_Buffer[buffer], 53,189,  FreqDivStr);
-		if((Row>(123+Yadj))&&(Row<(149+Yadj)))Print_Str_Row(Row, LCD_Buffer[buffer], 124+Yadj,189,  "T1:" ); 
-		if((Row>(147+Yadj))&&(Row<(205+(Yadj*2))))Print_Str_Row(Row, LCD_Buffer[buffer], 148+Yadj,189, FreqT1Str);
+        if(Row<54)Print_Str_Row(Row, LCD_Buffer[buffer], 21, 189,  "Div:" );            
+        if(Row<(110+Yadj))Print_Str_Row(Row, LCD_Buffer[buffer], 53,189,  FreqDivStr);
+        if((Row>(123+Yadj))&&(Row<(149+Yadj)))Print_Str_Row(Row, LCD_Buffer[buffer], 124+Yadj,189,  "T1:" ); 
+        if((Row>(147+Yadj))&&(Row<(205+(Yadj*2))))Print_Str_Row(Row, LCD_Buffer[buffer], 148+Yadj,189, FreqT1Str);
                 if(DownConvertMode)Yadj=(6*8);
-		if((Row>(217+Yadj))&&(Row<(243+Yadj)))Print_Str_Row(Row, LCD_Buffer[buffer], 218+Yadj,189, "V2:");    
+        if((Row>(217+Yadj))&&(Row<(243+Yadj)))Print_Str_Row(Row, LCD_Buffer[buffer], 218+Yadj,189, "V2:");    
 
                 if(Row>267){ 
                   if(DownConvertMode){
@@ -1984,13 +1984,13 @@ u8 Yadj=0;
                     Print_Str_Row(Row, LCD_Buffer[buffer],274,21, "End=");
                     Print_Str_Row(Row, LCD_Buffer[buffer],274,10, NFreqStr);
                   }else{
-  		    Print_Str_Row(Row, LCD_Buffer[buffer], 280, 1,  Nsuffix);
-		    Print_Str_Row(Row, LCD_Buffer[buffer], 268,10,  Nfreq);
+            Print_Str_Row(Row, LCD_Buffer[buffer], 280, 1,  Nsuffix);
+            Print_Str_Row(Row, LCD_Buffer[buffer], 268,10,  Nfreq);
                   }
                 }
 }
 
-void LoadBuffer(u16 Row, u8 buffer,u8 *y,u8 *Dot_Hide,u8 service){		
+void LoadBuffer(u16 Row, u8 buffer,u8 *y,u8 *Dot_Hide,u8 service){      
   u8  i=0,j=0,h=0,end; 
   u16 Col=0,Dim[4]={0x4200,0x0208,0x4008,0x0200};
  
@@ -2004,7 +2004,7 @@ void LoadBuffer(u16 Row, u8 buffer,u8 *y,u8 *Dot_Hide,u8 service){
      for(i=0;i<end;i++)if(y[i]>ListBottom){y[i]=ListBottom;Dot_Hide[i]=1;}                                         //limit to bottom of list
    }
 
- if(service){		//normal draw
+ if(service){       //normal draw
 
    if((_T_base>7)||(Row!=skip) ||((_T_base>3)&&(_Mode!=SCAN))){
      for(j=0;j<end;j+=2){
@@ -2021,7 +2021,7 @@ void LoadBuffer(u16 Row, u8 buffer,u8 *y,u8 *Dot_Hide,u8 service){
      for(i=191;i<199;i++)LCD_Buffer[buffer][i] |= YEL_;        
    }
 
- }else{			//persistence mode 
+ }else{         //persistence mode 
 
       for(j=0;j<end;j+=2){
         h=j/2;
@@ -2036,8 +2036,7 @@ void LoadBuffer(u16 Row, u8 buffer,u8 *y,u8 *Dot_Hide,u8 service){
           }
         }
       }
- } 
-
+    }
 }
 
 void LoadFFTbuffer(u16 Row,u8 buffer){
@@ -2045,8 +2044,8 @@ void LoadFFTbuffer(u16 Row,u8 buffer){
   u8  i; //,j; 
 
      if((Row > MIN_X)&&(Row < MAX_X)){
-	// FFT ///////
-	if (ShowFFT==1){
+    // FFT ///////
+    if (ShowFFT==1){
 
                 if((ClearPerst)||(Update)||(_Mode!=NORHLD)||(UpdateBackground==3)){
 
@@ -2054,52 +2053,47 @@ void LoadFFTbuffer(u16 Row,u8 buffer){
                   DisplayFFtValues(Row,buffer);
                   COLOR_INDEX=0x0503;
 
-                  if(!((_Mode==NORHLD)&&(AutoFFT==1)))	//AutoFFT=0 sets log, other values: 1=Auto on, 2-X  = AutoFFT OFF, =FFTgain+1        
+                  if(!((_Mode==NORHLD)&&(AutoFFT==1)))  //AutoFFT=0 sets log, other values: 1=Auto on, 2-X  = AutoFFT OFF, =FFTgain+1        
                     {if(Row>241)DisplayDbScale(Row,buffer,0);}
                 } 
 
-		fftx = Row - MIN_X; // starts at 1
-		if (fftx < (FFTSize/2)-1) {
-                        val = fi[fftx];
-			if (val >= 200) val = 199;
-                        if(PeakFreq>198)PeakFreq=198;
-                      
-                      if(_Mode!=NORHLD){
+        fftx = Row - MIN_X; // starts at 1
+        if (fftx < (FFTSize/2)-1) {
+            val = fi[fftx];
+            if (val >= 200) val = 199;
+                if(PeakFreq>198) {PeakFreq=198;}
+                if(_Mode!=NORHLD){
+                    if(fi[fftx+1]>173)TraceShadow(174,fi[fftx+1]+2,buffer);
+                    if(fi[fftx-1]>173)TraceShadow(174,fi[fftx-1]+2,buffer);
 
-                        if(fi[fftx+1]>173)TraceShadow(174,fi[fftx+1]+2,buffer);
-                        if(fi[fftx-1]>173)TraceShadow(174,fi[fftx-1]+2,buffer);
-
-                        for(i=Y_BASE+1;i<val; i++) LCD_Buffer[buffer][i] = GRN; if(val>173)LCD_Buffer[buffer][i]=BLACK;     
-                        if((FlagMeter>0)||((DownConvertMode)&&(FFTt1Mode==0))){
-  			  if ((fftx == imax - 4) || (fftx == imax + 4)) {
-				for (i=PeakFreq - 1; i<PeakFreq+1; i++) {
-					LCD_Buffer[buffer][i] = RED;
-					RowMem=Row; 
-				}
-			  } else if ((fftx == imax - 3) || (fftx == imax + 3)) {
-				LCD_Buffer[buffer][PeakFreq] = RED;
-			  } else if ((fftx == imax - 5) || (fftx == imax + 5)) {
-				for (i=PeakFreq - 2; i<PeakFreq+2; i++) { 
-					LCD_Buffer[buffer][i] = RED;
-				}
-			  }
+                    for(i=Y_BASE+1;i<val; i++) {LCD_Buffer[buffer][i] = GRN;}
+                    if(val>173) {LCD_Buffer[buffer][i]=BLACK;}
+                    if((FlagMeter>0)||((DownConvertMode)&&(FFTt1Mode==0))){
+                        if ((fftx == imax - 4) || (fftx == imax + 4)) {
+                            for (i=PeakFreq - 1; i<PeakFreq+1; i++) {
+                                LCD_Buffer[buffer][i] = RED;
+                                RowMem=Row; 
+                            }
+                        } else if ((fftx == imax - 3) || (fftx == imax + 3)) {
+                            LCD_Buffer[buffer][PeakFreq] = RED;
+                        } else if ((fftx == imax - 5) || (fftx == imax + 5)) {
+                            for (i=PeakFreq - 2; i<PeakFreq+2; i++) { 
+                                LCD_Buffer[buffer][i] = RED;
+                            }
                         }
+                    }
 
-                      }else {
-
-                        if( (Current==FILE)&&(Row>Limit)&&(_Det==3)&&(Title[9][0].Value==1) ){
+                } else {
+                    if( (Current==FILE)&&(Row>Limit)&&(_Det==3)&&(Title[9][0].Value==1) ){
                           if(val>ListBottom)val=ListBottom;
-                        }
-
-                        __Point_SCR(Row,MIN_Y);
-                        for(i=Y_BASE+1;i<val; i++)__LCD_SetPixl(GRN);
-                        __Point_SCR(Row, MIN_Y); 
-                      }
-
-		}  	//if fftx
-	}      		//if show fft	
-      }        		//if row
-
+                    }
+                    __Point_SCR(Row,MIN_Y);
+                    for(i=Y_BASE+1;i<val; i++)__LCD_SetPixl(GRN);
+                    __Point_SCR(Row, MIN_Y); 
+                }
+            }   //if fftx
+        }           //if show fft   
+    }             //if row
 }
 
 
@@ -2107,34 +2101,34 @@ void LoadFFTbuffer(u16 Row,u8 buffer){
 /*******************************************************************************
 Print_Str_Row: 
 *******************************************************************************/
-void Print_Str_Row(u16 Row, u16* LCD_Buffer, u16 x0, s16 y0, char *s)	
+void Print_Str_Row(u16 Row, u16* LCD_Buffer, u16 x0, s16 y0, char *s)   
 { 
-	signed short i, y, b;  
+    signed short i, y, b;  
         u16 w = x0;
         u8 Width;
         u8 YStart=0;
         if(y0<1)YStart=(-(y0))+1;                                                  //clip at bottom edge for moveable text
         
-	while(*s != 0) {
+    while(*s != 0) {
                 if(*s==127)Width=3;
                 else if(*s==33)Width=4;
                 else Width=CHAR_WIDTH;  
-		if ((Row >= w) && (Row < (w + Width))) {
-			i = Row - w;				 
-                        if((*s==0x20)||(*s==33)) b = 0x0000; else b = Get_TAB_8x11(*s, i);	   //add space and half space characters	
-			for (y = YStart; y < CHAR_HEIGHT; y++) {
-				if((b << y)& 0x400) {
-				  LCD_Buffer[y0 + y] = Color[COLOR_INDEX & 0x0F];   //Normal replace Display
-				} else {
-				  LCD_Buffer[y0 + y] = Color[COLOR_INDEX >> 0x8];   //Inverse replace Display
-				}
-			}
-			break;
-		}
-		
-		w += Width;
-		s++;
-	}
+        if ((Row >= w) && (Row < (w + Width))) {
+            i = Row - w;                 
+                        if((*s==0x20)||(*s==33)) b = 0x0000; else b = Get_TAB_8x11(*s, i);     //add space and half space characters    
+            for (y = YStart; y < CHAR_HEIGHT; y++) {
+                if((b << y)& 0x400) {
+                  LCD_Buffer[y0 + y] = Color[COLOR_INDEX & 0x0F];   //Normal replace Display
+                } else {
+                  LCD_Buffer[y0 + y] = Color[COLOR_INDEX >> 0x8];   //Inverse replace Display
+                }
+            }
+            break;
+        }
+        
+        w += Width;
+        s++;
+    }
 }
 
 void VernierMark(u8 buffer,u16 color){
@@ -2163,7 +2157,7 @@ u8 i;
 void TraceShadow(u8 start,u8 limit,u8 buffer){
 u8 i;
   if(limit>199)limit=199;
-  for(i=start;i<limit;i++)LCD_Buffer[buffer][i] = BLACK;			
+  for(i=start;i<limit;i++)LCD_Buffer[buffer][i] = BLACK;            
 }        
 
 
@@ -2174,7 +2168,7 @@ u8 i;
 
 void ClearFFTbuffer(void){
 u16 i;
-   for (i=0; i<256; i++)fi[i]=0;     						 
+   for (i=0; i<256; i++)fi[i]=0;                             
 }
 
 s32 ScaleXposi(void){
@@ -2190,7 +2184,7 @@ s32 ScaleXposi(void){
 void ClearScreenArea(u16 x1,u16 x2,u8 y1,u8 y2){
 u16 i;
 u8  j;
-     for (i=x1;i<x2;i++){		      
+     for (i=x1;i<x2;i++){             
        __Point_SCR(i,y1);
        for (j=y1;j<y2;j++){
           __LCD_SetPixl(BLACK);
@@ -2208,8 +2202,10 @@ u8 j;
 */
 
      if(DownConvertMode==0){ 
-       for(j=0;j<5;j++)Nfreq[j]=NFreqStr[j]; Nfreq[3+index+index]=0;            
-       for(j=0;j<2;j++)Nsuffix[j]=NFreqStr[j+(4+index+suffix)]; Nsuffix[2]=0;      
+       for(j=0;j<5;j++) {Nfreq[j]=NFreqStr[j];}
+       Nfreq[3+index+index]=0;            
+       for(j=0;j<2;j++) {Nsuffix[j]=NFreqStr[j+(4+index+suffix)];}
+       Nsuffix[2]=0;      
      }
 
 }
@@ -2223,19 +2219,19 @@ u8 b=0;  //5 bits  0-31
     if(level>198)level=198; 
 
     //RED
-    if((level>100)&&(level<148)){			//ramp up 1/2 - 3/4, max 3/4 - 1
+    if((level>100)&&(level<148)){           //ramp up 1/2 - 3/4, max 3/4 - 1
       r=((level-100)*2)/3;
     }else if(level>147)r=31;
 
     //GREEN
-    if((level>50)&&(level<98)){				//ramp up 1/4 - 1/2, max 1/2 - 3/4, ramp down 3/4 - 1
+    if((level>50)&&(level<98)){             //ramp up 1/4 - 1/2, max 1/2 - 3/4, ramp down 3/4 - 1
       g=((level-50)*4)/3;
     }else if(level>150){
       g=((198-level)*4)/3;
     }else if(level>97) g=63;
 
     //BLUE
-    if(level<48){					//ramp up 0 - 1/4, max 1/4 - 3/4, ramp down 3/4 - 1
+    if(level<48){                   //ramp up 0 - 1/4, max 1/4 - 3/4, ramp down 3/4 - 1
       b=(level*2)/3;
     }else if(level>150){
       b=((198-level)*2)/3;
